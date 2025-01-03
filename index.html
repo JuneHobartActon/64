@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --square-size: 64px;
-            --board-size: calc(var(--square-size) * 8);
+            --board-size: min(80vmin, 640px);
+            --square-size: calc(var(--board-size) / 8);
+            --piece-size: calc(var(--square-size) * 0.7);
+            --border-size: calc(var(--board-size) * 0.025);
         }
 
         body {
-            margin: 0;
             min-height: 100vh;
+            min-height: 100dvh;
             background: #644321;
             background-image: 
                 repeating-linear-gradient(45deg, 
@@ -27,31 +36,34 @@
         .container {
             text-align: center;
             perspective: 1000px;
-            padding: 20px;
+            padding: min(5vmin, 20px);
+            width: 100%;
         }
 
         h1 {
             color: #d4b383;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            font-size: 64px;
+            font-size: min(64px, 15vmin);
             font-family: 'Times New Roman', serif;
             letter-spacing: 2px;
-            margin-bottom: 30px;
+            margin-bottom: min(30px, 5vmin);
         }
 
         .board-container {
             transform: rotateX(20deg) scale(0.9);
             transform-style: preserve-3d;
+            margin: 0 auto;
+            width: fit-content;
         }
 
         .board {
             display: grid;
             grid-template-columns: repeat(8, var(--square-size));
             grid-template-rows: repeat(8, var(--square-size));
-            border: 16px solid #321;
+            border: var(--border-size) solid #321;
             box-shadow: 
-                0 0 64px rgba(0, 0, 0, 0.5),
-                inset 0 0 32px rgba(0, 0, 0, 0.3);
+                0 0 calc(var(--board-size) * 0.1) rgba(0, 0, 0, 0.5),
+                inset 0 0 calc(var(--board-size) * 0.05) rgba(0, 0, 0, 0.3);
             background: #321;
             position: relative;
             transform-style: preserve-3d;
@@ -61,9 +73,9 @@
             content: '';
             position: absolute;
             width: 100%;
-            height: 16px;
+            height: var(--border-size);
             background: #221;
-            bottom: -16px;
+            bottom: calc(var(--border-size) * -1);
             transform: rotateX(-90deg);
             transform-origin: top;
         }
@@ -71,10 +83,10 @@
         .board::after {
             content: '';
             position: absolute;
-            width: 16px;
+            width: var(--border-size);
             height: 100%;
             background: #221;
-            right: -16px;
+            right: calc(var(--border-size) * -1);
             top: 0;
             transform: rotateY(90deg);
             transform-origin: left;
@@ -84,11 +96,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 40px;
-            cursor: pointer;
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.3s;
+            width: 100%;
+            height: 100%;
         }
 
         .white {
@@ -104,58 +116,61 @@
         .piece {
             transition: all 0.3s;
             transform-style: preserve-3d;
-            font-size: 45px;
-            color: #321;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-size: var(--piece-size);
             cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            line-height: 1;
         }
 
-        /* Add wooden texture effect to pieces */
-        .piece::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, rgba(139, 69, 19, 0.1), rgba(205, 133, 63, 0.1));
-            z-index: -1;
+        .piece.white-piece {
+            color: #ffffff;
+            text-shadow: 
+                -1px -1px 0 #321,
+                1px -1px 0 #321,
+                -1px 1px 0 #321,
+                1px 1px 0 #321,
+                2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .piece.black-piece {
+            color: #321;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .piece:hover {
-            transform: translateZ(16px) scale(1.2);
+            transform: translateZ(calc(var(--square-size) * 0.25)) scale(1.2);
             filter: drop-shadow(0 0 6px rgba(255, 223, 128, 0.6));
         }
 
         .info-panel {
             position: fixed;
-            right: -320px;
             top: 0;
-            width: 320px;
+            right: 0;
+            width: min(320px, 80vw);
             height: 100%;
-            background: #642 url('data:image/svg+xml,<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="%23321" opacity="0.2"/><path d="M0 32h64M32 0v64" stroke="%23221" stroke-width="1"/></svg>');
-            transition: right 0.5s ease-in-out;
+            height: 100dvh;
+            background: #642;
+            transform: translateX(100%);
+            transition: transform 0.5s ease-in-out;
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            box-sizing: border-box;
-            color: #d4b383;
             z-index: 1000;
         }
 
         .info-panel.active {
-            right: 0;
+            transform: translateX(0);
         }
 
         .close-btn {
             position: absolute;
-            top: 16px;
-            left: 16px;
+            top: min(16px, 4vmin);
+            left: min(16px, 4vmin);
             cursor: pointer;
-            font-size: 24px;
+            font-size: min(24px, 6vmin);
             color: #d4b383;
             background: none;
             border: 2px solid #d4b383;
-            padding: 4px 8px;
+            padding: min(4px, 1vmin) min(8px, 2vmin);
             transition: all 0.3s;
         }
 
@@ -164,51 +179,35 @@
             color: #321;
         }
 
-        .content-box {
-            background: rgba(51, 34, 17, 0.9);
-            padding: 16px;
-            margin: 16px auto;
-            border: 2px solid #d4b383;
-            max-width: 384px;
-            color: #d4b383;
-            font-size: 1.1em;
-            text-align: center;
-            box-shadow: inset 0 0 32px rgba(0, 0, 0, 0.3);
-        }
-
         .info-panel h2 {
-            font-size: 32px;
-            margin-top: 64px;
+            color: #d4b383;
+            font-size: min(32px, 8vmin);
+            margin-top: min(64px, 16vmin);
             text-align: center;
-            border-bottom: 2px solid #d4b383;
-            padding-bottom: 8px;
         }
 
-        .info-panel p {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-top: 16px;
-            text-align: center;
-            padding: 0 16px;
+        @media (max-aspect-ratio: 1/1) {
+            .board-container {
+                transform: rotateX(20deg) scale(0.8);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .board-container {
+                transform: rotateX(20deg) scale(0.7);
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>64</h1>
-        
-        <div class="content-box">
-            <p>Select any piece</p>
-        </div>
-
         <div class="board-container">
             <div class="board" id="chessBoard"></div>
         </div>
-
         <div class="info-panel" id="infoPanel">
             <button class="close-btn" onclick="closeInfo()">×</button>
             <h2 id="infoTitle"></h2>
-            <p id="infoContent"></p>
         </div>
     </div>
 
@@ -216,7 +215,6 @@
         const board = document.getElementById('chessBoard');
         const infoPanel = document.getElementById('infoPanel');
         const infoTitle = document.getElementById('infoTitle');
-        const infoContent = document.getElementById('infoContent');
 
         const initialBoard = [
             ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'],
@@ -229,21 +227,6 @@
             ['♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖']
         ];
 
-        const pieceClasses = {
-            '♔': 'white-king',
-            '♕': 'white-queen',
-            '♖': 'white-rook',
-            '♗': 'white-bishop',
-            '♘': 'white-knight',
-            '♙': 'white-pawn',
-            '♚': 'black-king',
-            '♛': 'black-queen',
-            '♜': 'black-rook',
-            '♝': 'black-bishop',
-            '♞': 'black-knight',
-            '♟︎': 'black-pawn'
-        };
-
         // Create the board
         for (let row = 0; row < 8; row++) {
             for (let col = 0; col < 8; col++) {
@@ -252,7 +235,7 @@
                 
                 if (initialBoard[row][col]) {
                     const piece = document.createElement('div');
-                    piece.className = `piece ${pieceClasses[initialBoard[row][col]]}`;
+                    piece.className = `piece ${/[♔♕♖♗♘♙]/.test(initialBoard[row][col]) ? 'white-piece' : 'black-piece'}`;
                     piece.textContent = initialBoard[row][col];
                     piece.onclick = () => showPieceInfo(initialBoard[row][col], row, col);
                     square.appendChild(piece);
@@ -264,48 +247,15 @@
 
         function showPieceInfo(piece, row, col) {
             let title = '';
-
             switch(piece) {
-                case '♔':
-                    title = 'King';
-                    break;
-                case '♚':
-                    title = 'King';
-                    break;
-                case '♕':
-                    title = 'Queen';
-                    break;
-                case '♛':
-                    title = 'Queen';
-                    break;
-                case '♖':
-                    title = 'Rook';
-                    break;
-                case '♜':
-                    title = 'Rook';
-                    break;
-                case '♗':
-                    title = 'Bishop';
-                    break;
-                case '♝':
-                    title = 'Bishop';
-                    break;
-                case '♘':
-                    title = 'Knight';
-                    break;
-                case '♞':
-                    title = 'Knight';
-                    break;
-                case '♙':
-                    title = `Pawn ${col + 1}`;
-                    break;
-                case '♟︎':
-                    title = `Pawn ${col + 1}`;
-                    break;
+                case '♔': case '♚': title = 'King'; break;
+                case '♕': case '♛': title = 'Queen'; break;
+                case '♖': case '♜': title = 'Rook'; break;
+                case '♗': case '♝': title = 'Bishop'; break;
+                case '♘': case '♞': title = 'Knight'; break;
+                case '♙': case '♟︎': title = `Pawn ${col + 1}`; break;
             }
-
             infoTitle.textContent = title;
-            infoContent.textContent = '';
             infoPanel.classList.add('active');
         }
 
