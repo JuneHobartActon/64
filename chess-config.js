@@ -1,6 +1,6 @@
 // Chess piece information configuration
 const pieceInfo = {
-    // Black pawns (numbered 1-8 from left to right)
+    // Black pawns (from left to right)
     'black-pawn-1': {
         title: '',
         description: '',
@@ -42,7 +42,7 @@ const pieceInfo = {
         position: ''
     },
 
-    // White pawns (numbered 1-8 from left to right)
+    // White pawns (left to right)
     'white-pawn-1': {
         title: '',
         description: '',
@@ -84,7 +84,7 @@ const pieceInfo = {
         position: ''
     },
 
-    // Other white pieces
+    // Other pieces
     'white-king': {
         title: '',
         description: '',
@@ -110,8 +110,6 @@ const pieceInfo = {
         description: '',
         position: ''
     },
-
-    // Other black pieces
     'black-king': {
         title: '',
         description: '',
