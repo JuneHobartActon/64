@@ -347,6 +347,74 @@
             infoPanel.classList.remove('active');
         }
 
+function handleSquareClick(e, row, col) {
+    if (!selectedPiece) return;
+    
+    const moveIsValid = possibleMoves.some(([r, c]) => r === row && c === col);
+    if (moveIsValid) {
+        gameBoard[row][col] = selectedPiece.piece;
+        gameBoard[selectedPiece.row][selectedPiece.col] = '';
+        selectedPiece = null;
+        document.querySelectorAll('.move-indicator').forEach(indicator => {
+            indicator.classList.remove('visible', 'capture');
+        });
+        createBoard();
+    }
+}
+
+function calculatePossibleMoves(piece, row, col) {
+    const moves = [];
+    const isWhite = isWhitePiece(piece);
+    
+    switch(piece) {
+        case '♙':
+            if (row > 0 && !gameBoard[row-1][col]) {
+                moves.push([row-1, col]);
+                if (row === 6 && !gameBoard[row-2][col]) {
+                    moves.push([row-2, col]);
+                }
+            }
+            if (row > 0) {
+                if (col > 0 && gameBoard[row-1][col-1] && !isWhitePiece(gameBoard[row-1][col-1])) {
+                    moves.push([row-1, col-1]);
+                }
+                if (col < 7 && gameBoard[row-1][col+1] && !isWhitePiece(gameBoard[row-1][col+1])) {
+                    moves.push([row-1, col+1]);
+                }
+            }
+            break;
+        case '♟︎':
+            if (row < 7 && !gameBoard[row+1][col]) {
+                moves.push([row+1, col]);
+                if (row === 1 && !gameBoard[row+2][col]) {
+                    moves.push([row+2, col]);
+                }
+            }
+            if (row < 7) {
+                if (col > 0 && gameBoard[row+1][col-1] && isWhitePiece(gameBoard[row+1][col-1])) {
+                    moves.push([row+1, col-1]);
+                }
+                if (col < 7 && gameBoard[row+1][col+1] && isWhitePiece(gameBoard[row+1][col+1])) {
+                    moves.push([row+1, col+1]);
+                }
+            }
+            break;
+        case '♔': case '♚':
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    if (i === 0 && j === 0) continue;
+                    const newRow = row + i;
+                    const newCol = col + j;
+                    if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+                        moves.push([newRow, newCol]);
+                    }
+                }
+            }
+            break;
+    }
+    return moves;
+}
+        
         document.addEventListener('click', function(event) {
             if (!event.target.closest('.info-panel') && 
                 !event.target.closest('.piece') && 
