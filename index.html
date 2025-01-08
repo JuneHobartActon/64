@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html><head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -167,20 +166,25 @@
             .game-btn { font-size: 0.9rem; padding: 8px 16px; }
         }
     </style>
-</head>
+<link rel="stylesheet" href="chrome-extension://ihcjicgdanjaechkgeegckofjjedodee/app/content-style.css"><style id="__web-inspector-hide-shortcut-style__">
+.__web-inspector-hide-shortcut__, .__web-inspector-hide-shortcut__ *, .__web-inspector-hidebefore-shortcut__::before, .__web-inspector-hideafter-shortcut__::after
+{
+    visibility: hidden !important;
+}
+</style></head>
 <body>
     <div class="scene">
         <div class="table"></div>
         <div class="board-container">
-            <div class="board" id="chessBoard"></div>
+            <div class="board" id="chessBoard"><div class="square white" data-row="0" data-col="0"><div class="piece black-piece">♜</div></div><div class="square black" data-row="0" data-col="1"><div class="piece black-piece">♞</div></div><div class="square white" data-row="0" data-col="2"><div class="piece black-piece">♝</div></div><div class="square black" data-row="0" data-col="3"><div class="piece black-piece">♛</div></div><div class="square white" data-row="0" data-col="4"><div class="piece black-piece">♚</div></div><div class="square black" data-row="0" data-col="5"><div class="piece black-piece">♝</div></div><div class="square white" data-row="0" data-col="6"><div class="piece black-piece">♞</div></div><div class="square black" data-row="0" data-col="7"><div class="piece black-piece">♜</div></div><div class="square black" data-row="1" data-col="0"><div class="piece black-piece">♟︎</div></div><div class="square white" data-row="1" data-col="1"><div class="piece black-piece">♟︎</div></div><div class="square black" data-row="1" data-col="2"><div class="piece black-piece">♟︎</div></div><div class="square white" data-row="1" data-col="3"><div class="piece black-piece">♟︎</div></div><div class="square black" data-row="1" data-col="4"><div class="piece black-piece">♟︎</div></div><div class="square white" data-row="1" data-col="5"><div class="piece black-piece">♟︎</div></div><div class="square black" data-row="1" data-col="6"><div class="piece black-piece">♟︎</div></div><div class="square white" data-row="1" data-col="7"><div class="piece black-piece">♟︎</div></div><div class="square white" data-row="2" data-col="0"></div><div class="square black" data-row="2" data-col="1"></div><div class="square white" data-row="2" data-col="2"></div><div class="square black" data-row="2" data-col="3"></div><div class="square white" data-row="2" data-col="4"></div><div class="square black" data-row="2" data-col="5"></div><div class="square white" data-row="2" data-col="6"></div><div class="square black" data-row="2" data-col="7"></div><div class="square black" data-row="3" data-col="0"></div><div class="square white" data-row="3" data-col="1"></div><div class="square black" data-row="3" data-col="2"></div><div class="square white" data-row="3" data-col="3"></div><div class="square black" data-row="3" data-col="4"></div><div class="square white" data-row="3" data-col="5"></div><div class="square black" data-row="3" data-col="6"></div><div class="square white" data-row="3" data-col="7"></div><div class="square white" data-row="4" data-col="0"></div><div class="square black" data-row="4" data-col="1"></div><div class="square white" data-row="4" data-col="2"></div><div class="square black" data-row="4" data-col="3"></div><div class="square white" data-row="4" data-col="4"></div><div class="square black" data-row="4" data-col="5"></div><div class="square white" data-row="4" data-col="6"></div><div class="square black" data-row="4" data-col="7"></div><div class="square black" data-row="5" data-col="0"></div><div class="square white" data-row="5" data-col="1"></div><div class="square black" data-row="5" data-col="2"></div><div class="square white" data-row="5" data-col="3"></div><div class="square black" data-row="5" data-col="4"></div><div class="square white" data-row="5" data-col="5"></div><div class="square black" data-row="5" data-col="6"></div><div class="square white" data-row="5" data-col="7"></div><div class="square white" data-row="6" data-col="0"><div class="piece white-piece">♙</div></div><div class="square black" data-row="6" data-col="1"><div class="piece white-piece">♙</div></div><div class="square white" data-row="6" data-col="2"><div class="piece white-piece">♙</div></div><div class="square black" data-row="6" data-col="3"><div class="piece white-piece">♙</div></div><div class="square white" data-row="6" data-col="4"><div class="piece white-piece">♙</div></div><div class="square black" data-row="6" data-col="5"><div class="piece white-piece">♙</div></div><div class="square white" data-row="6" data-col="6"><div class="piece white-piece">♙</div></div><div class="square black" data-row="6" data-col="7"><div class="piece white-piece">♙</div></div><div class="square black" data-row="7" data-col="0"><div class="piece white-piece">♖</div></div><div class="square white" data-row="7" data-col="1"><div class="piece white-piece">♘</div></div><div class="square black" data-row="7" data-col="2"><div class="piece white-piece">♗</div></div><div class="square white" data-row="7" data-col="3"><div class="piece white-piece">♕</div></div><div class="square black" data-row="7" data-col="4"><div class="piece white-piece">♔</div></div><div class="square white" data-row="7" data-col="5"><div class="piece white-piece">♗</div></div><div class="square black" data-row="7" data-col="6"><div class="piece white-piece">♘</div></div><div class="square white" data-row="7" data-col="7"><div class="piece white-piece">♖</div></div></div>
         </div>
         <div class="controls">
-            <button class="game-btn" id="startGame">Play vs AI</button>
-            <button class="game-btn" id="resetBoard">Reset</button>
+            
+            
         </div>
     </div>
     <div class="info-panel" id="infoPanel">
-        <h2 class="info-title" id="infoTitle">64</h2>
+        <h2 class="info-title" id="infoTitle">Black Pawn 3</h2>
         <div class="info-position" id="infoPosition"></div>
         <div class="info-description" id="infoDescription"></div>
     </div>
@@ -508,5 +512,6 @@
 
         createBoard();
     </script>
-</body>
-</html>
+
+
+</body></html>
